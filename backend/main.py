@@ -12,7 +12,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -42,7 +42,7 @@ async def analyse_code(file: UploadFile = File(...)):
     """
 
     response = client.models.generate_content(
-        model="gemini-3.5-flash",
+        model="gemini-3.5-flash-lite",
         contents=prompt
     )
 

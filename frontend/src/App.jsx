@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
+
 import { Upload, FileCode, Loader, AlertTriangle, CheckCircle } from "lucide-react"
 import axios from "axios"
 
 export default function App() {
+  const fileInputRef = useRef(null)
+
   const [dragging, setDragging] = useState(false)
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
@@ -58,15 +61,24 @@ export default function App() {
 
       {/* Upload Box */}
       <div
-        onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={handleDrop}
+  onClick={() => fileInputRef.current.click()}
+  onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+  onDragLeave={() => setDragging(false)}
+  onDrop={handleDrop}
         className={`w-full max-w-2xl border-2 border-dashed rounded-2xl p-16 flex flex-col items-center justify-center cursor-pointer transition-all duration-200
           ${dragging
             ? "border-blue-400 bg-blue-950"
             : "border-gray-700 bg-gray-900 hover:border-gray-500"
           }`}
-      >
+          >
+          <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          className="hidden"
+          onChange={(e) => setFiles(Array.from(e.target.files))}
+         />   
+        
         <Upload size={48} className="text-gray-500 mb-4" />
         <p className="text-xl font-medium text-gray-300 mb-2">
           Drag and drop your code files here
