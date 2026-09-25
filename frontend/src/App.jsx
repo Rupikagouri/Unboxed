@@ -29,7 +29,7 @@ export default function App() {
 
       try {
         const response = await axios.post(
-          "http://localhost:8000/analyse",
+          "https://unboxed.onrender.com/analyse",
           formData
         )
         analyses.push(response.data)
